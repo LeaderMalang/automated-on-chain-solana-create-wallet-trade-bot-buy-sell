@@ -12,13 +12,13 @@ import json
 config = dotenv_values(".env")
 
 
-if len(sys.argv) < 3:
-    print("Usage: python main.py <CONTRACT_ADDRESS> <PRIVATE_KEY_1> ")
-    sys.exit(1)
+# if len(sys.argv) < 3:
+#     print("Usage: python main.py <CONTRACT_ADDRESS> <PRIVATE_KEY_1> ")
+#     sys.exit(1)
 
 # Get contract address and wallet keys from console arguments
-arg_contract_address=sys.argv[1]
-funding_wallet=sys.argv[2]
+arg_contract_address='5PmfCMK8F71QkJLkB1JbhvjyuUZVD6M5BPCFtYRgpump'
+funding_wallet='3H2NyCUjUWnJ7c3rredHwxjou6VuJW9dboYTAKdwJtUMQTNYf4w9uGX3Eqr2A2prPW3H3hhje7jW1Rif9JEFU6p7'
 
 # print(arg_contract_address,arg_wallet_keys)
 # Connect to Solana cluster
@@ -30,8 +30,8 @@ start = 0.0000001
 stop = 0.0000009
 num_elements = 3
 buy_times=1
-number_of_wallets=2
-amount_in_sol = 0.005  # 1 SOL
+number_of_wallets=10
+amount_in_sol = 0.001  # 1 SOL
 
 # Convert the amount to lamports
 amount_in_lamports = int(amount_in_sol * 1_000_000_000)
@@ -52,6 +52,7 @@ async def main():
         receiver = Keypair.from_base58_string(wallet['private_key'])
         await transfer_fund(solana_client,payer,receiver,amount_in_lamports)
         wallet['transfer']=True
+        time.sleep(5)
     token_toBuy=arg_contract_address #Enter token you wish to buy here
     for i in range(buy_times):
         print("Buy time",i+1)
